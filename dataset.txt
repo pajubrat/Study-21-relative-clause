@@ -1,0 +1,552 @@
+
+
+#
+# Dataset for manuscript
+# "Finnish relative clause and the derivational search function"
+# submitted for publication
+# 2025
+#
+			
+# --- English ---
+
+# Intransitive VP
+
+	Numeration=the,dog,barks
+	the dog barks
+
+# Intransitive VP plus finite T
+
+	Numeration=T,the,dog,bark
+	the dog bark#T
+
+	# Robustness
+
+		Numeration=T,the,dog,the,dog,bark
+		Numeration=T,T,the,dog,bark
+		Numeration=T,the,the,dog,bark
+		Numeration=T,the,dog,dog,bark
+		Numeration=T,the,dog,bark,bark
+		Numeration=T,dog,bark
+		Numeration=T,the,dog
+
+# Transitive VP
+
+	Numeration=the,man,bites*,the,dog
+	the man bites* the dog
+	the dog bites* the man
+
+	# Robustness
+
+		Numeration=the,man,bites*,the,dog,the,dog
+
+		Numeration=man,bites*,the,dog
+		Numeration=the,bites*,the,dog
+		Numeration=the,man,the,dog
+
+		Numeration=the,the,man,bites*,the,dog
+		Numeration=the,man,man,bites*,the,dog
+		Numeration=the,man,bites*,bites*,the,dog
+
+# Transitive VP with finite T
+
+	Numeration=T,the,man,v,bites,the,dog
+	the man bites#v#T the dog
+	the dog bites#v#T the man
+
+	# Robustness
+
+		Numeration=T,the,man,v,bites,the,dog,the,dog
+
+		Numeration=T,man,v,bites,the,dog
+		Numeration=T,the,v,bites,the,dog
+		Numeration=T,the,man,bites,the,dog
+		Numeration=T,the,man,v,the,dog
+
+		Numeration=T,T,the,man,v,bites,the,dog
+		Numeration=T,the,the,man,v,bites,the,dog
+		Numeration=T,the,man,man,v,bites,the,dog
+		Numeration=T,the,man,v,v,bites,the,dog
+		Numeration=T,the,man,v,bites,bites,the,dog
+
+# Transitive VP with AUX/T
+
+	Numeration=the,man,did,v,bites,the,dog
+	the man did bites#v the dog
+	the dog did bites#v the man
+
+	# Robustness
+	
+		Numeration=the,man,did,v,bites,the,dog,the,dog
+		
+		Numeration=man,did,v,bites,the,dog
+		Numeration=the,did,v,bites,the,dog
+		Numeration=the,man,did,bites,the,dog
+		
+		Numeration=the,the,man,did,v,bites,the,dog
+		Numeration=the,man,man,did,v,bites,the,dog
+		Numeration=the,man,did,did,v,bites,the,dog
+		Numeration=the,man,did,v,v,bites,the,dog
+		Numeration=the,man,did,v,bites,bites,the,dog
+	
+# Transitive vP with finite T (=did) and clause typing C
+
+	Numeration=C,the,man,did,v,bite,the,dog
+	C the man did bite#v the dog
+	C the dog did bite#v the man
+
+# Transitive vP with finite T (=did) and clause typing C, with Aux inversion
+
+	Numeration=C(wh),the,man,did,v,bite,the,dog
+	did#C(wh) the man bite#v the dog
+	did#C(wh) the dog bite#v the man
+
+# Intransitive interrogative
+
+	Numeration=C(wh),which,dog,did,bark
+	which dog did#C(wh) bark
+
+	#Robustness
+		
+		Numeration=C(wh),dog,bark
+		Numeration=C(wh),which,dog,bark
+		Numeration=C(wh),which,dog,did
+
+		Numeration=C(wh),C(wh),which,dog,did,bark
+		Numeration=C(wh),which,which,dog,did,bark
+		Numeration=C(wh),which,dog,did,did,bark
+		Numeration=C(wh),which,dog,did,bark,bark
+		
+# Transitive interrogative
+
+	Numeration=C(wh),the,man,did,v,bite,which,dog
+	which dog did#C(wh) the man bite#v
+	which man did#C(wh) the dog bite#v
+	which dog did#C(wh) bite#v the man
+	which man did#C(wh) bite#v the dog
+
+# Adverb adjunction, intransitive clause
+
+	Numeration=T,the,dog,bark,frequently
+	the dog bark#T frequently
+
+	#Robustness
+	
+		Numeration=T,dog,bark,frequently
+		Numeration=T,the,bark,frequently
+		Numeration=T,the,dog,frequently
+		
+		Numeration=T,T,the,dog,bark,frequently
+		Numeration=T,the,the,dog,bark,frequently
+		Numeration=T,the,dog,dog, bark,frequently
+		Numeration=T,the,dog,bark,bark,frequently
+
+# Adverb adjunction, transitive clause
+
+	Numeration=T,the,dog,v,bite,the,man,frequently
+	the dog bite#v#T the man frequently
+	the dog bite#v#T frequently the man
+	the man bite#v#T the dog frequently
+	the man bite#v#T frequently the dog
+
+# Adjectie adjunction inside DP
+
+	Numeration=the,angry,dog
+	the angry dog
+
+# Adjective and adverb adjunction, intransitive clause
+
+	Numeration=the,angry,dog,barks,frequently
+	the angry dog barks frequently
+
+# Adjetive inside DP, in a finite clause
+
+	Numeration=T,the,angry,dog,bark
+	the angry dog bark#T
+
+# Right-adjunction of PP to VP
+
+	Numeration=the,dog,barks,in,the,city
+	the dog barks in the city
+	the city barks in the dog
+	the dog in the city barks
+	the city in the dog barks
+
+	# Robustness
+	
+		Numeration=the,dog,barks,in,the
+		Numeration=the,dog,the,man,barks,in,the,city
+	
+# RELATIVE CLAUSES
+
+# Intransitive subject-relativization
+
+	Numeration=the,dog,which*,N0,C(rel),T,bark
+	the dog N0#which* bark#T
+
+	# Robustness
+
+		Numeration=the,which*,N0,C(rel),T,bark
+		Numeration=the,dog,N0,C(rel),T,bark
+		Numeration=the,dog,which*,C(rel),T,bark
+		Numeration=the,dog,which*,N0,T,bark
+		Numeration=the,dog,which*,N0,C(rel),bark
+		Numeration=the,dog,which*,N0,C(rel),T
+
+		Numeration=the,the,dog,which*,N0,C(rel),T,bark
+		Numeration=the,dog,dog,which*,N0,C(rel),T,bark
+		Numeration=the,dog,which*,which*,N0,C(rel),T,bark
+		Numeration=the,dog,which*,N0,N0,C(rel),T,bark
+		Numeration=the,dog,which*,N0,C(rel),C(rel),T,bark
+		Numeration=the,dog,which*,N0,C(rel),T,T,bark
+
+# Inransitive subject-relativization with two verbs, parse found
+
+	Numeration=the,dog,which*,N0,C(rel),T,bark,bark
+	the dog N0#which* bark#T bark
+ 
+# Transitive subject/object-relativization
+
+	Numeration=dog,which*,N0,C(rel),T,v,bite,the,man
+	man N0#which* bite#v#T the dog
+	dog N0#which* bite#v#T the man
+	man N0#which* the dog bite#v#T
+	dog N0#which* the man bite#v#T
+
+	# Robustness
+
+		Numeration=dog,N0,C(rel),T,v,bite,the,man
+		Numeration=dog,which*,C(rel),T,v,bite,the,man
+		Numeration=dog,which*,N0,T,v,bite,the,man
+		Numeration=dog,which*,N0,C(rel),v,bite,the,man
+		Numeration=dog,which*,N0,C(rel),T,bite,the,man
+		Numeration=dog,which*,N0,C(rel),T,v,the,man
+		Numeration=dog,which*,N0,C(rel),T,v,bite,man
+		Numeration=dog,which*,N0,C(rel),T,v,bite
+
+		Numeration=the,the,man,did,v,bites,the,dog
+		Numeration=the,man,man,did,v,bites,the,dog
+		Numeration=the,man,did,did,v,bites,the,dog
+		Numeration=the,man,did,v,v,bites,the,dog
+		Numeration=the,man,did,v,bites,bites,the,dog
+		Numeration=the,man,did,v,bites,the,the,dog
+		Numeration=the,man,did,v,bites,the,dog,dog
+
+		Numeration=the,dog,the,dog,which*,N0,C(rel),T,bark
+		Numeration=the,dog,which*,N0,which*,N0,C(rel),T,bark
+
+# 657.419.088 implicit English test expressions
+
+# --- Finnish ---------------------------------------------------
+	
+# Baseline tests, intransitive and transitive TPs
+
+# Intransitive TP
+	
+	Numeration=T,D0,koira,haukkui
+	'T,D0,dog.nom,bark.3sg.pst'
+	koira#D0 haukkui#T
+	'dog.nom bark.3sg.pst'
+
+	# Robustness
+		
+		Numeration=T,koira,haukkui
+		Numeration=T,D0,koira		
+		Numeration=T,T,D0,koira,haukkui
+		Numeration=T,D0,D0,koira,haukkui
+		Numeration=T,D0,koira,koira,haukkui
+		Numeration=T,D0,koira,haukkui,haukkui
+		Numeration=T,D0,koira,D0,koira,haukkui
+
+# Transitive TP
+	
+	Numeration=T,D0,koira,v,puri,D0,miesta
+	'T,D0,dog.nom,v,bite.3sg.pst,D0,man.par'
+	koira#D0 puri#v#T miesta#D0
+	'dog.nom bite.3sg.pst man.par'
+
+	# Robustness
+		
+		Numeration=T,koira,v,puri,D0,miesta
+		Numeration=T,D0,v,puri,D0,miesta
+		Numeration=T,D0,koira,puri,D0,miesta
+		Numeration=T,D0,koira,v,D0,miesta
+
+		Numeration=T,T,D0,koira,v,puri,D0,miesta
+		Numeration=T,D0,D0,koira,v,puri,D0,miesta
+		Numeration=T,D0,koira,koira,v,puri,D0,miesta
+		Numeration=T,D0,koira,v,v,puri,D0,miesta
+		Numeration=T,D0,koira,v,puri,puri,D0,miesta
+
+# Intransitive CP
+	
+	Numeration=C,T,D0,koira,haukkui
+	'C,T,D0,dog.nom,bark.3sg.pst'
+	C koira#D0 haukkui#T
+	'dog.nom bark.3sg.pst'
+
+	# Robustness
+	
+		Numeration=C,C,T,D0,koira,haukkui
+		Numeration=C,T,T,D0,koira,haukkui
+		Numeration=C,T,D0,D0,koira,haukkui
+		Numeration=C,T,D0,koira,haukkui,haukkui
+		
+		Numeration=C,D0,koira,haukkui
+		Numeration=C,T,koira,haukkui
+		Numeration=C,T,D0,haukkui
+		Numeration=C,T,D0,koira
+
+# Transitive CP
+	
+	Numeration=C,T,D0,koira,v,puri,D0,miesta
+	'C,T,D0,dog.nom,v,bite.3sg.pst,D0,man.par'
+	C koira#D0 puri#v#T miesta#D0
+	'dog.nom bite.3sg.pst man.par'
+
+	# Robustness
+	
+		Numeration=C,D0,koira,v,puri,D0,miesta
+		Numeration=C,T,koira,v,puri,D0,miesta
+		Numeration=C,T,D0,v,puri,D0,miesta
+		Numeration=C,T,D0,koira,puri,D0,miesta
+		Numeration=C,T,D0,koira,v,D0,miesta
+
+		Numeration=C,C,T,D0,koira,v,puri,D0,miesta
+		Numeration=C,T,T,D0,koira,v,puri,D0,miesta
+		Numeration=C,T,D0,D0,koira,v,puri,D0,miesta
+		Numeration=C,T,D0,koira,v,v,puri,D0,miesta
+		Numeration=C,T,D0,koira,v,puri,puri,D0,miesta
+
+# Relative clauses, intransitive and transitive (subject, object relativization))
+
+# Relative clause, intransitive
+
+	Numeration=koira,C(rel),T,joka,N0,haukkui
+	'dog.nom,C(rel),T,who.sg.nom,N0,bark.3sg.pst'
+	koira N0#joka haukkui#T
+	'dog.nom who.sg.nom bark.3sg.pst'
+
+	# Robustness
+
+		Numeration=koira,T,joka,N0,haukkui
+		Numeration=koira,C(rel),joka,N0,haukkui
+		Numeration=koira,C(rel),T,N0,haukkui
+		Numeration=koira,C(rel),T,joka,haukkui
+		Numeration=koira,C(rel),T,joka,N0
+		
+		Numeration=koira,C(rel),C(rel),T,joka,N0,haukkui
+		Numeration=koira,C(rel),T,T,joka,N0,haukkui
+		Numeration=koira,C(rel),T,joka,joka,N0,haukkui
+		Numeration=koira,C(rel),T,joka,N0,N0,haukkui
+		Numeration=koira,C(rel),T,joka,N0,haukkui,haukkui
+
+# Subject relativization, transitive
+
+	Numeration=koira,C(rel),T,joka,N0,v,puri,D0,miesta
+	'dog.nom,C(rel),T,who.sg.nom,N0,v,bite.3sg.pst,D0,man.par'
+	koira N0#joka puri#v#T miesta#D0
+	'dog.nom who.sg.nom bite.3sg.pst man.par'
+
+	# Robustness
+	
+		Numeration=koira,T,joka,N0,v,puri,D0,miesta
+		Numeration=koira,C(rel),joka,N0,v,puri,D0,miesta
+		Numeration=koira,C(rel),T,N0,v,puri,D0,miesta
+		Numeration=koira,C(rel),T,joka,v,puri,D0,miesta
+		Numeration=koira,C(rel),T,joka,N0,puri,D0,miesta
+		Numeration=koira,C(rel),T,joka,N0,v,D0,miesta
+
+# Object relativization, transitive
+
+	Numeration=mies,C(rel),T,jota,N0,D0,koira,v,puri
+	'man.nom,C(rel),T,who.sg.par,N0,D0,dog.nom,v,bite.3sg.pst'
+	mies N0#jota koira#D0 puri#v#T
+	'man.nom who.sg.par dog.nom bite.3sg.pst'
+	koira N0#jota mies#D0 puri#v#T
+	'dog.nom who.sg.par man.nom bite.3sg.pst'
+
+	# Robustness
+
+		Numeration=mies,T,jota,N0,D0,koira,v,puri
+		Numeration=mies,C(rel),jota,N0,D0,koira,v,puri
+		Numeration=mies,C(rel),T,N0,D0,koira,v,puri
+		Numeration=mies,C(rel),T,jota,D0,koira,v,puri
+		Numeration=mies,C(rel),T,jota,N0,koira,v,puri
+		Numeration=mies,C(rel),T,jota,N0,D0,koira,puri
+		Numeration=mies,C(rel),T,jota,N0,D0,koira,v
+	
+# Case permutations/violations
+
+	# Relative clause, intransitive, case violation
+
+		Numeration=koira,C(rel),T,jota,N0,haukkui
+		'dog.nom,C(rel),T,who.sg.par,N0,bark.3sg.pst'
+
+		# Subject relativization, transitive, case violations
+		# PAR-PAR
+		Numeration=koira,C(rel),T,jota,N0,v,puri,D0,miesta
+		'dog.nom,C(rel),T,who.sg.par,N0,v,bite.3sg.pst,D0,man.par'
+		# NOM-NOM
+		Numeration=koira,C(rel),T,joka,N0,v,puri,D0,mies
+		'dog.nom,C(rel),T,who.sg.nom,N0,v,bite.3sg.pst,D0,man.nom'
+
+		# Object relativization, transitive
+
+		# PAR-PAR
+		Numeration=mies,C(rel),T,jota,N0,D0,koiraa,v,puri
+		'man.nom,C(rel),T,who.sg.par,N0,D0,dog.par,v,bite.3sg.pst'
+		# NOM-NOM
+		Numeration=mies,C(rel),T,joka,N0,D0,koira,v,puri
+		'man.nom,C(rel),T,who.sg.nom,N0,D0,dog.nom,v,bite.3sg.pst'
+		
+	# Two relative pronouns and missing relative pronouns
+		
+		# Two relative pronouns
+
+		Numeration=koira,C(rel),T,joka,N0,v,puri,jota,N0
+		'dog.nom,C(rel),T,who.sg.nom,N0,v,bite.3sg.pst,who.par,N0'
+		Numeration=mies,C(rel),T,jota,N0,joka,N0,v,puri
+		'man.nom,C(rel),T,who.sg.par,N0,who.nom,v,bite.3sg.pst'
+
+		# No relative pronouns
+		
+		Numeration=mies,C(rel),D0,miesta,D0,koira,v,puri
+		'man.nom,C(rel),D0,man.par,D0,dog.nom,v,bite.3sg.pst'
+		Numeration=koira,C(rel),T,D0,koira,v,puri,D0,miesta
+		'dog.nom,C(rel),T,D0,dog.nom,v,bite.3sg.pst,D0,man.par'
+
+	# Additional and missing DP-arguments 
+	# Note: These numerations have 11 items, very long calculations
+
+		# Additiona DP-argument, object relativization
+		
+			# Additional DP-argument (NOM)
+			Numeration=mies,C(rel),T,jota,N0,D0,koira,D0,koira,v,puri
+			'man.nom,C(rel),T,who.sg.par,N0,D0,dog.nom,D0,dog.nom,v,bite.3sg.pst'
+			
+			# Additional DP-argument (PAR)
+			Numeration=mies,C(rel),T,jota,N0,D0,koira,D0,koiraa,v,puri
+			'man.nom,C(rel),T,who.sg.par,N0,D0,dog.nom,D0,dog.par,v,bite.3sg.pst'
+
+		# Additional DP-argument, subject relativization
+
+			# Additional DP-argument (NOM)
+			Numeration=koira,C(rel),T,joka,N0,v,puri,D0,miesta,D0,mies
+			'dog.nom,C(rel),T,who.sg.nom,N0,v,bite.3sg.pst,D0,man.par,D0,man.nom'
+
+			# Additional DP-argument (PAR)
+			Numeration=koira,C(rel),T,joka,N0,v,puri,D0,miesta,D0,miesta
+			'dog.nom,C(rel),T,who.sg.nom,N0,v,bite.3sg.pst,D0,man.parm,D0,man.par'
+
+		# Missing DP-argument, object relativization
+		
+			Numeration=mies,C(rel),T,jota,N0,v,puri
+			'man.nom,C(rel),T,who.sg.par,N0,v,bite.3sg.pst'
+
+		# Missing DP-argument, subject relativization
+		
+			Numeration=koira,C(rel),T,joka,N0,v,puri
+			'dog.nom,C(rel),T,who.sg.nom,N0,v,bite.3sg.pst'
+
+	# Case concord
+	
+		Numeration=se,koira
+		'the.nom dog.nom'
+		se koira
+		'the.nom dog.nom'
+		# Note: /se/ will be glossed as a definite article, 
+		# but it can also be interpreted/used as a neutral demonstrative
+		# communicating discourse anaphoricity.
+
+		Numeration=lahella,sita,koiraa
+		'near,the.par,dog.par'
+		lahella sita koiraa
+		'near the.par dog.par'
+
+		Numeration=se,koiraa
+		'the.nom,dog.par'
+		Numeration=sita,koira
+		'the.par,dog.nom'
+		Numeration=lahella,se,koiraa
+		'near,the.nom,dog.par'
+		Numeration=lahella,sita,koira
+		'near,the.par,dog.nom'
+
+	# Case concord with a relative clause
+
+		Numeration=se,koira,C(rel),T,joka,N0,haukkui
+		'the.nom,dog.nom,C(rel),T,who.sg.nom,N0,bark.3sg.pst'
+		se koira N0#joka haukkui#T
+		'the.nom dog.nom who.sg.nom bark.3sg.pst'
+
+		Numeration=se,koiraa,C(rel),T,joka,N0,haukkui
+		'the.nom,dog.par,C(rel),T,who.nom,N0,bark.3sg.pst'
+		Numeration=sita,koira,C(rel),T,joka,N0,haukkui
+		'the.par,dog.nom,C(rel),T,who.nom,N0,bark.3sg.pst'
+		Numeration=sita,koiraa,C(rel),T,joka,N0,haukkui
+		'the.par,dog.par,C(rel),T,who.nom,N0,bark.3sg.pst'
+		# Note: Ungrammatical because PAR does not have licensing syntactic context
+
+		Numeration=lahella,sita,koiraa,C(rel),T,joka,N0,haukkui
+		'near,the.par,dog,par,C(rel),T,who.nom,N0,bark.3sg.pst'
+		lahella sita koiraa N0#joka haukkui#T
+		'near the.par dog.par who.nom bark.3sg.pst'
+
+		Numeration=lahella,se,koiraa,C(rel),T,joka,N0,haukkui
+		'near,the.nom,dog.par,C(rel),T,who.nom,N0,bark.3sg.pst'
+		Numeration=lahella,sita,koira,C(rel),T,joka,N0,haukkui
+		'near,the.par,dog.nom,C(rel),T,who.nom,N0,bark.3sg.pst'
+		Numeration=lahella,se,koira,C(rel),T,joka,N0,haukkui
+		'near,the.nom,dog.nom,C(rel),T,who.nom,N0,bark.3sg.pst'
+
+# Agreement
+
+	# D-N agreement tests
+
+		# Grammatical
+	
+		Numeration=se,koira,C(rel),T,joka,N0,haukkui
+		'the.nom,dog.nom,C(rel),T,who.nom,N0,bark.3sg.pst'
+		se koira N0#joka haukkui#T
+		'the.nom dog.nom who.nom bark.3sg.pst'
+		# Note: 3sg can be used for 3pl subject
+		
+		Numeration=ne,koirat,C(rel),T,jotka,N0,haukkui
+		'those.nom,dog.pl.nom,C(rel),T,who.nom.pl,N0,bark.3sg.pst'
+		ne koirat N0#jotka haukkui#T
+		'those.nom dog.pl.nom who.pl.nom bark.3sg.pst'
+		
+		# Ungrammatical
+		
+		Numeration=se,koirat,C(rel),T,joka,N0,haukkui	
+		'the.nom dog.nom.pl,C(rel),T,who.nom,N0,bark.3sg.pst'
+		Numeration=ne,koira,C(rel),T,jotka,N0,haukkui
+		'those.nom,dog.nom.sg,C(rel),T,who.nom.pl,N0,bark.3sg.pst'
+
+	# Relative pronoun-D agreement tests
+
+		# Grammatical
+	
+		Numeration=se,koira,C(rel),T,joka,N0,haukkui
+		'the.nom,dog.nom,C(rel),T,who.nom.sg,N0,bark.3sg.pst'
+		se koira N0#joka haukkui#T
+		'the.nom dog.nom who.nom bark.3sg.pst'
+		
+		Numeration=ne,koirat,C(rel),T,jotka,N0,haukkui
+		'those.nom,dog.nom.pl,C(rel),T,who.nom.pl,N0,bark.3sg.pst'
+		ne koirat N0#jotka haukkui#T
+		'those.nom dog.pl.nom who.pl.nom bark.3sg.pst'
+
+		# Ungrammatical
+
+		Numeration=se,koira,C(rel),T,jotka,N0,haukkui
+		'the.nom,dog.nom,C(rel),T,who.pl.nom,N0,bark.3sg.pst'
+		Numeration=ne,koirat,C(rel),T,joka,N0,haukkui
+		'those.nom dog.pl.nom,C(rel),T,who.sg.nom,N0,bark.3sg.pst'
+
+	# Double agreement violations
+
+		Numeration=se,koirat,C(rel),T,jotka,N0,haukkui
+		'the.nom,dog.pl.nom,C(rel),T,who.nom.pl,N0,bark.3sg.pst'
+		Numeration=ne,koira,C(rel),T,joka,N0,haukkui
+		'those.nom dog.sg.nom,C(rel),T,who.nom,N0,bark.3sg.pst'

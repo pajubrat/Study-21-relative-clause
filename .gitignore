@@ -1,0 +1,14 @@
+*.pyc
+__pycache__
+.idea
+*.png
+*.jpg
+*.bat
+*.ps
+vendor
+icons
+config
+cmder_mini
+bin
+PCBPlugin5
+*log*

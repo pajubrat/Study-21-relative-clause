@@ -1,0 +1,87 @@
+#	
+# Lexicon for script template3_1.py
+#
+# lexicon format:
+# key:	value (set of features, as strings)
+
+# AD HOC -------------------------------------------------
+a ::			a SPEC:b,c,ø COMP:b,c,ø LANG:EN
+b ::			b SPEC:a,c,ø COMP:a,c,ø LANG:EN 
+c ::			c SPEC:a,b,ø COMP:a,b,ø LANG:EN
+
+# ENGLISH ------------------------------------------------
+the ::			D LANG:EN
+dog ::			N LANG:EN
+bark ::			V V/INTR LANG:EN
+barks ::		V V/INTR LANG:EN
+bites* :: 		V COMP:D SPEC:D LANG:EN
+bite :: 		V V/TR LANG:EN
+bites :: 		V V/TR LANG:EN
+bite* :: 		V V/TR LANG:EN
+which ::		D WH OP LANG:EN
+which* :: 		D REL OP PC:#X +wCOMP:N0 LANG:EN
+man :: 			N LANG:EN
+angry :: 		A α:N LANG:EN
+frequently :: 	Adv LANG:EN
+city :: 		N LANG:EN
+from :: 		P LANG:EN
+in :: 			P α:V LANG:EN
+ed :: 			T PC:#X +wCOMP:V LANG:EN
+did :: 			T PC:_X_ EPP AUX LANG:EN
+does :: 		T EPP AUX LANG:EN
+was :: 			T EPP AUX LANG:EN
+
+# FINNISH --------------------------------------------
+koira	::		N NOM PHI:NUM:SG LANG:FI
+koiraa	::		N PAR PHI:NUM:SG LANG:FI
+koirat	::		N NOM PHI:NUM:PL LANG:FI
+koiria	::		N PAR PHI:NUM:PL LANG:FI
+miesta	::		N PAR LANG:FI
+mies	::		N NOM LANG:FI
+joka	:: 		D π REL OP NOM PHI:NUM:SG PC:#X +wCOMP:N0 LANG:FI
+jotka	::		D π REL OP NOM PHI:NUM:PL PC:#X +wCOMP:N0 LANG:FI
+jota	::		D π REL OP PAR PHI:NUM:SG PC:#X +wCOMP:N0 LANG:FI
+joita	::		D π REL OP PAR PHI:NUM:PL PC:#X +wCOMP:N0 LANG:FI
+puri	::		V V/TR LANG:FI
+se		::		D NOM PHI:NUM:SG
+sita	::		D PAR PHI:NUM:SG
+ne		::		D NOM PHI:NUM:PL
+lahella	::		P
+haukkui	::		V V/INTR LANG:FI
+
+
+# UNIVERSAL ------------------------------------------
+D ::			D
+D0 ::			D PC:#X +wCOMP:N
+C :: 			C Fin
+C(wh) :: 		C Fin C(wh) PC:#X +wCOMP:T OP WH SCOPE
+C(rel) :: 		C Fin C(rel) REL SCOPE OP α:N λ:R PHON:0
+v :: 			v κ PC:#X +wCOMP:V
+T ::			T Fin
+N0 :: 			N N0 π COMP:--,ø -LRR
+N::				N
+
+#
+# Lexical reducancy rules
+#
+# format
+# trigger > new features
+
+D			=> 		COMP:N
+Dem			=> 		COMP:N
+Adv			=>		SPEC:Adv,ø λ:R α:V
+P			=> 		COMP:D λ:R κ
+C			=> 		COMP:T SPEC:D,ø
+A			=> 		λ:L α:N
+N			=> 		π COMP:C,P,ø,C(rel) SPEC:A,ø
+v			=>		V κ COMP:V SPEC:D wCOMP:V -ε
+V/INTR		=> 		SPEC:D
+V/TR		=>		COMP:D
+Fin			=>		κ
+
+T LANG:EN	=> 		COMP:V SPEC:D EPP PC:#X +wCOMP:V
+T LANG:FI		=>  	COMP:V SPEC:D EPP PC:#X +wCOMP:V
+PAR LANG:FI		=>		κ:v,P
+NOM LANG:FI		=>		κ:Fin,ø
+REL LANG:FI		=>		-INSITU
+
