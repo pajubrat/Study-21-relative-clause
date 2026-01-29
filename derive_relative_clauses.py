@@ -65,7 +65,7 @@ def print_ordered_lst(lst):
 
 
 class SpeakerLexicon:
-    """Stores the lexical knowledge for a group of people"""
+    """Stores the lexical knowledge for a group of people, i.e. a language, dialect, register"""
     def __init__(self, L, ld):
         self.speaker_lexicon = dict()          # Speaker lexicon, as dictionary
         self.create_speaker_lexicon(L, ld)     # Create speaker lexicon
