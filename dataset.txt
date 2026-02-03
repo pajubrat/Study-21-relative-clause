@@ -1,5 +1,3 @@
-
-
 #
 # Dataset for manuscript
 # "Finnish relative clause and the derivational search function"
@@ -148,7 +146,7 @@
 	the man bite#v#T the dog frequently
 	the man bite#v#T frequently the dog
 
-# Adjectie adjunction inside DP
+# Adjective adjunction inside DP
 
 	Numeration=the,angry,dog
 	the angry dog
@@ -239,6 +237,13 @@
 # --- Finnish ---------------------------------------------------
 	
 # Baseline tests, intransitive and transitive TPs
+
+# Basic NP (head) constructions
+
+	Numeration=se,vihainen,koira
+	'the.nom angry.nom dog.nom'
+	se vihainen koira
+	'the.nom angry.nom dog.nom'
 
 # Intransitive TP
 	
@@ -340,6 +345,21 @@
 		Numeration=koira,C(rel),T,joka,N0,N0,haukkui
 		Numeration=koira,C(rel),T,joka,N0,haukkui,haukkui
 
+	# D + N + relative clause
+
+		Numeration=se,koira,C(rel),T,joka,N0,haukkui
+		'the.nom dog.nom,C(rel),T,who.sg.nom,N0,bark.3sg.pst'
+		se koira N0#joka haukkui#T
+		'dog.nom who.sg.nom bark.3sg.pst'
+
+	# D + A + N + relative clause
+	# (Generates one error)
+
+		Numeration=se,vihainen,koira,C(rel),T,joka,N0,haukkui
+		'the.nom, angry.nom, dog.nom, C(rel), T, who.sg.nom, N0, bark.3sg.pst
+		se vihainen koira N0#joka haukkui#T	
+		'the.nom angry.nom dog.nom who.nom barked.3sg.pst'
+
 # Subject relativization, transitive
 
 	Numeration=koira,C(rel),T,joka,N0,v,puri,D0,miesta
@@ -379,6 +399,8 @@
 
 	# Relative clause, intransitive, case violation
 
+		# PAR subject inside relative clause
+
 		Numeration=koira,C(rel),T,jota,N0,haukkui
 		'dog.nom,C(rel),T,who.sg.par,N0,bark.3sg.pst'
 
@@ -389,6 +411,12 @@
 		# NOM-NOM
 		Numeration=koira,C(rel),T,joka,N0,v,puri,D0,mies
 		'dog.nom,C(rel),T,who.sg.nom,N0,v,bite.3sg.pst,D0,man.nom'
+		# PAR-PAR
+		Numeration=se,koira,C(rel),T,jota,N0,v,puri,D0,miesta
+		'the.nom,dog.nom,C(rel),T,who.sg.par,N0,v,bite.3sg.pst,D0,man.par'
+		# NOM-NOM
+		Numeration=se,koira,C(rel),T,joka,N0,v,puri,D0,mies
+		'the.nom dog.nom,C(rel),T,who.sg.nom,N0,v,bite.3sg.pst,D0,man.nom'
 
 		# Object relativization, transitive
 
@@ -398,7 +426,13 @@
 		# NOM-NOM
 		Numeration=mies,C(rel),T,joka,N0,D0,koira,v,puri
 		'man.nom,C(rel),T,who.sg.nom,N0,D0,dog.nom,v,bite.3sg.pst'
-		
+		# PAR-PAR
+		Numeration=se,mies,C(rel),T,jota,N0,D0,koiraa,v,puri
+		'the.nom,man.nom,C(rel),T,who.sg.par,N0,D0,dog.par,v,bite.3sg.pst'
+		# NOM-NOM
+		Numeration=se,mies,C(rel),T,joka,N0,D0,koira,v,puri
+		'the.nom man.nom,C(rel),T,who.sg.nom,N0,D0,dog.nom,v,bite.3sg.pst'
+	
 	# Two relative pronouns and missing relative pronouns
 		
 		# Two relative pronouns

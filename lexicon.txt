@@ -1,5 +1,5 @@
 #	
-# Lexicon for script template3_1.py
+# Lexicon for Brattico (2026)
 #
 # lexicon format:
 # key:	value (set of features, as strings)
@@ -48,7 +48,7 @@ sita	::		D PAR PHI:NUM:SG
 ne		::		D NOM PHI:NUM:PL
 lahella	::		P
 haukkui	::		V V/INTR LANG:FI
-
+vihainen :: 	A α:N LANG:FI
 
 # UNIVERSAL ------------------------------------------
 D ::			D

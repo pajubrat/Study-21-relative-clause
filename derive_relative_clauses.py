@@ -759,7 +759,6 @@ class LanguageData:
         if errors > 0:
             print(f'\tShould not generate: {overgeneralization}')
             print(f'\tShould generate: {undergeneralization}')
-            sys.exit()
         return errors
 
 # Run one whole study as defined by the dataset file, itself containing
