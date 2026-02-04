@@ -139,13 +139,14 @@ class PhraseStructure:
         self.copied = None              # Copy link
 
         # Auxiliary properties not part of the empirical theory
-        self.adjuncts = set()           # Stores the set of adjuncts adjoined to the constituent
-                                        # This is an auxiliary structure that is not part of the theory and simplifies
-                                        # certain calculations
-        self.adjunct = False            # Auxiliary assumption, not part of theory
-        self.isomapping = None         # Auxiliary structure for backtracking purposes
-        self.chain_index = 0            # Initial chain index
-        self.phonological_exponent = '' # Phonological exponent of the constituent, used in printout and linearization
+        self.adjuncts = set()            # Stores the set of adjuncts adjoined to the constituent
+        self.adjunct = False             # Auxiliary assumption, not part of theory
+        self.isomapping = None           # Auxiliary structure for backtracking purposes
+        self.chain_index = 0             # Initial chain index
+        self.phonological_exponent = ''  # Phonological exponent of the constituent, used in printout and linearization
+
+    def print_features(X):
+        return ''.join(f'[{x}]' for x in X.features)
 
     def left(X):
         """Abstraction for the notion of left daughter"""
@@ -154,6 +155,9 @@ class PhraseStructure:
     def right(X):
         """Abstraction for the notion of right daughter"""
         return X.const[1]
+
+    def add_feature(X, f):
+        X.features.add(f)
 
     def Merge(X, Y):
         """Standard Merge"""
@@ -189,25 +193,30 @@ class PhraseStructure:
     def copy_properties(Y, X):
         """Copies properties of X into Y and returns Y."""
         Y.phonological_exponent = X.phonological_exponent
-        Y.features = X.features
+        Y.features = {x for x in X.features}
         Y.zero = X.zero
         Y.copied = X.copied
         Y.chain_index = X.chain_index
         Y.elliptic = X.elliptic
-        Y.adjuncts = X.adjuncts
+        Y.adjuncts = {x for x in X.adjuncts.copy()}
         Y.adjunct = X.adjunct
         if X.adjunct:
             Y.mother = X.mother
         X.isomapping = Y
         return Y
 
-    def chaincopy(X):
-        """Grammatical copying operation, with phonological silencing"""
+    def chaincopy(X, H=None):
+        """Grammatical copying operation, with phonological silencing
+        X = phrase/head to be copied
+        H = triggering head
+        """
         if not X.zero_level():  # Head movement does not create chain indexes
             X.label_chain()     # Create chain information, not part of the theory
         Y = X.copy()        # Copying
         X.elliptic = True   # Mark the source elliptic
         Y.copied = X        # Marking the copy chain
+        if H and X.scan_features({'OP'}):
+            H.add_feature('OP')
         return Y
 
     def zero_level(X):
@@ -273,25 +282,24 @@ class PhraseStructure:
         (iii) the complement of X contains an item with [wh];
         (iv) the item marked with [wh] has not already been moved;
         """
-        if X.head().scope_marker() and \
-                X.head().operator() and \
+        if X.head().EF() and \
                 X.head().complement() and \
                 X.head().complement().internal_search('OP') and \
-                not X.head().complement().internal_search('OP').elliptic:
+                not X.head().complement().internal_search('OP').elliptic and not X.head().complement().internal_search('OP').scope_marker():
             PhraseStructure.logging_report += f'\n\t+ Phrasal A-bar chain by {X.head()}° targeting {X.head().complement().internal_search("OP")}'
-            return X.head().complement().internal_search('OP').chaincopy().Merge(X)
+            return X.head().complement().internal_search('OP').chaincopy(X.head()).Merge(X)
         return X
 
     def operator_variable_condition(X):
         """This function simulates operator-variable interpretations"""
         if X.zero_level():
-            if X.operator() and X.scope_marker() and not X.scan_features({'AUX'}):
+            if X.EF() and X.scope_marker() and not X.scan_features({'AUX'}):
                 if not X.complement() or not X.complement().internal_search('OP'):
                     PhraseStructure.logging_report_detailed += f'\n\t*Operator {X} without variable.'
                     return False
             return True
         else:
-            if X.head().operator() and not X.head().scope_marker():
+            if X.head().operator() and not X.head().EF() and not X.head().scope_marker():
                 if not X.copied and not X.elliptic and '-INSITU' in X.head().features:
                     PhraseStructure.logging_report_detailed += f'\n\t*Operator {X} in situ.\n'
                     return False
@@ -372,7 +380,7 @@ class PhraseStructure:
 
     def internal_search(X, f):
         while X:
-            for c in X.const:
+            for c in (X,) + X.const + tuple(X.adjuncts):
                 if c and f in c.head().features:
                     return c
             X = X.right()
@@ -381,7 +389,8 @@ class PhraseStructure:
         return next((x for x in (X,) + X.const if x and x.zero_level()), X.phrasal() and X.right().head())
 
     def sister(X):
-        if X.mother:
+        """The second condition implies that adjuncts do not have sisters"""
+        if X.mother and X in X.mother.const:
             return next((const for const in X.mother.const if const != X), None)
 
     def complement(X):
@@ -422,32 +431,47 @@ class PhraseStructure:
 
     def complement_subcategorization(X, Y):
         """Complement subcategorization under [X Y]"""
-        if (not Y and (not X.selected_features('COMP:') or 'ø' in X.selected_features('COMP:'))) or \
-                (Y and X.selected_features('COMP:') and
-                 Y.head().check(X.selected_features('COMP:')) and
-                 Y.head().subcategorization()):
+
+        # If there is no complement, check that the configuration licensed?
+        if not Y and (not X.selected_features('COMP:') or 'ø' in X.selected_features('COMP:')):
+            return True
+        # If there is complement, verity that the complement is licensed
+        if Y and X.selected_features('COMP:') and Y.head().check(X.selected_features('COMP:')) and Y.head().subcategorization():
             return True
         PhraseStructure.logging_report_detailed += f'\n\t*Complement selection violation by |{X}|° ({X.get_selection_features()})'
 
     def specifier_subcategorization(X, Spec=None):
         """Specifier subcategorization under [XP YP]"""
+
         if not Spec:
+            # If there is no specifier, check that the configuration is licensed
             if not X.specifier():
                 if X.selected_features('SPEC:') and 'ø' not in X.selected_features('SPEC:'):
                     PhraseStructure.logging_report_detailed += f'\n\t*Missing specifier selection violation by |{X}|° ({X.get_selection_features()})'
                     return False
                 return True
+            # ...otherwise, let Spec = specifier
             Spec = X.specifier()
 
-        # Deletes multiple specifier constructions (ad hoc rule). The real principle has to do with
-        # thematic roles: formal specifier positions are unable to assign thematic roles (semantics)
-        if Spec and Spec.mother and Spec.mother.sister() and not Spec.mother.sister().zero_level():
-            PhraseStructure.logging_report_detailed += f'\n\t*Multiple  specifier selection violation by |{X}|° ({X.get_selection_features()})'
+        # If there are multiple specifiers, reject the configuration
+        if Spec and Spec.mother and Spec.mother.sister() and Spec.mother.sister().isLeft() and not Spec.mother.sister().zero_level():
+            PhraseStructure.logging_report_detailed += f'\n\t*Multiple specifier selection violation by |{X}|° ({X.get_selection_features()})'
             return False
 
-        if not X.selected_features('SPEC:') or not Spec.head().check(X.selected_features('SPEC:')):
-            PhraseStructure.logging_report_detailed += f'\n\t*Positive specifier selection violation by |{X}|° ({X.get_selection_features()}) against {Spec}'
+        # If there is specifier (Spec) and formal specifier selection EF, accept the configuration
+        if X.check({'EF'}) and X.operator():
+            return True
+
+        # If there is no SPEC selection, reject the configuration
+        if not X.selected_features('SPEC:'):
+            PhraseStructure.logging_report_detailed += f'\n\t*Specifier not licensed by |{X}|° ({X.get_selection_features()}) against {Spec}'
             return False
+
+        # If Spec selection targets wrong lexical category, reject the configuration
+        if not Spec.head().check(X.selected_features('SPEC:')):
+            PhraseStructure.logging_report_detailed += f'\n\t*Specifier category mismatch at |{X}|° ({X.get_selection_features()}) against {Spec}'
+            return False
+
         return True
 
     def check(X, features):
@@ -517,7 +541,7 @@ class PhraseStructure:
         to understand"""
         stri = ''
         # Linearize left adjuncts first
-        stri += ''.join([x.linearize() for x in X.adjuncts if x and x.linearizes_left()])
+        stri += ''.join([x.linearize() for x in X.adjuncts if x and not x.elliptic and x.linearizes_left()])
         # Linearize X if it is not elliptic
         if not X.elliptic:
             if X.zero_level():
@@ -526,7 +550,7 @@ class PhraseStructure:
             else:
                 stri += ''.join([x.linearize() for x in X.const])
         # Linearize right adjuncts last
-        stri += ''.join([x.linearize() for x in X.adjuncts if x and x.linearizes_right()])
+        stri += ''.join([x.linearize() for x in X.adjuncts if x and not x.elliptic and x.linearizes_right()])
         return stri
 
     def linearize_word(X):
@@ -549,13 +573,16 @@ class PhraseStructure:
         """Definition for EPP"""
         return 'EPP' in X.features
 
-    def operator(X):
+    def EF(X):
         """Definition for operators"""
+        return 'EF' in X.features
+
+    def operator(X):
         return 'OP' in X.features
 
     def scope_marker(X):
         """Definition for scope markers"""
-        return 'SCOPE' in X.features
+        return 'SCOPE' in X.head().features
 
     def linearizes_left(X):
         """Adjunct linearization to left is controlled by a lexical feature"""
@@ -599,6 +626,13 @@ class PhraseStructure:
     def lexical_category(X):
         """# Defines the major lexical categories used in all printouts"""
         return next((f for f in major_lexical_categories if f in X.features), '?')
+
+    def print_lexical_features(X):
+        """Print lexical features of all primitive constituents inside X"""
+        if X.phrasal():
+            return X.left().print_lexical_features() + X.right().print_lexical_features()
+        return f'{X}: {{{X.print_features()}}}      '
+
 
 class LogicalForm():
     def __init__(self):
@@ -671,15 +705,17 @@ class SpeakerModel():
     def process_final_output(self, sWM):
         PhraseStructure.chain_index = 0
         PhraseStructure.logging_report_detailed = ''
+        log_file.write(f'\n\tFEATURES= ')
         for X in sWM:
+            log_file.write(f'{X.print_lexical_features()}')
             if not self.LF.interface_check(X):
-                log_file.write(f'{PhraseStructure.logging_report_detailed}')
+                log_file.write(f'{PhraseStructure.logging_report_detailed}\n\t--------\n')
                 return
         self.n_accepted += 1
         prefix = f'{self.n_accepted}'
         output_sentence = f'{self.root_structure(sWM).linearize()}'
         print(f'\n({prefix}.)\n{output_sentence}\n{print_constituent_lst(sWM)}\n')   # Print the output
-        log_file.write(f'\n=>\t/{output_sentence[:-1]}/ accepted.')
+        log_file.write(f'\n=>\t/{output_sentence[:-1]}/ accepted.\n\t=========\n')
         self.output_data.add(output_sentence.strip())
         log_file.write('\n')
 
@@ -759,6 +795,10 @@ class LanguageData:
         if errors > 0:
             print(f'\tShould not generate: {overgeneralization}')
             print(f'\tShould generate: {undergeneralization}')
+            log_file.write(f'\n!\tOvergeneralization: {overgeneralization}\n')
+            log_file.write(f'\n!\tUndergeneralization: {undergeneralization}\n')
+            # Comment this out if you do not want to stop at errors
+            exit()
         return errors
 
 # Run one whole study as defined by the dataset file, itself containing

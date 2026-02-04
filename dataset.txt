@@ -1,3 +1,6 @@
+
+
+
 #
 # Dataset for manuscript
 # "Finnish relative clause and the derivational search function"
@@ -262,6 +265,15 @@
 		Numeration=T,D0,koira,haukkui,haukkui
 		Numeration=T,D0,koira,D0,koira,haukkui
 
+# Intransitive TP with PP adjunct
+
+	Numeration=T,D0,koira,haukkui,lahella,D0,miesta
+	'T,D0,dog.nom,bark.pst.3sg,near,D0,man'
+	koira#D0 haukkui#T lahella miesta#D0
+	'dog.nom bark.3sg.pst near man.par.'
+	koira#D0 lahella miesta#D0 haukkui#T
+	'dog.nom near man.par bark.pst.3sg'
+
 # Transitive TP
 	
 	Numeration=T,D0,koira,v,puri,D0,miesta
@@ -300,6 +312,17 @@
 		Numeration=C,T,koira,haukkui
 		Numeration=C,T,D0,haukkui
 		Numeration=C,T,D0,koira
+
+# Intransitive CP with PP adjunct
+
+	Numeration=C,T,D0,koira,haukkui,lahella,D0,miesta
+	'C,T,D0,dog.nom,bark.pst.3sg,near,D0,man'
+	C koira#D0 haukkui#T lahella miesta#D0
+	'dog.nom bark.3sg.pst near man.par.'
+	C koira#D0 lahella miesta#D0 haukkui#T
+	'dog.nom near man.par bark.pst.3sg'
+	lahella miesta#D0 C koira#D0 haukkui#T
+	'near man.par dog.nom bark.pst.3sg'
 
 # Transitive CP
 	
@@ -359,6 +382,9 @@
 		'the.nom, angry.nom, dog.nom, C(rel), T, who.sg.nom, N0, bark.3sg.pst
 		se vihainen koira N0#joka haukkui#T	
 		'the.nom angry.nom dog.nom who.nom barked.3sg.pst'
+		# THIS IS UNGRAMMATICAL
+		se koira N0#joka vihainen haukkui#T
+		'the.nom dog.nom which.par angry bark.pst.3sg'
 
 # Subject relativization, transitive
 
@@ -525,6 +551,8 @@
 		'near,the.par,dog,par,C(rel),T,who.nom,N0,bark.3sg.pst'
 		lahella sita koiraa N0#joka haukkui#T
 		'near the.par dog.par who.nom bark.3sg.pst'
+		N0#joka haukkui#T lahella sita koiraa
+		'which.nom bark.pst.3sg near that.par dog.par'
 
 		Numeration=lahella,se,koiraa,C(rel),T,joka,N0,haukkui
 		'near,the.nom,dog.par,C(rel),T,who.nom,N0,bark.3sg.pst'
@@ -584,3 +612,21 @@
 		'the.nom,dog.pl.nom,C(rel),T,who.nom.pl,N0,bark.3sg.pst'
 		Numeration=ne,koira,C(rel),T,joka,N0,haukkui
 		'those.nom dog.sg.nom,C(rel),T,who.nom,N0,bark.3sg.pst'
+		
+# Internal Ā-chains, snowballing
+
+	# Internal Ā-chain, [PP which.par]
+	
+		# (Unconvergent, internal chain test, check the log for correctness)
+		Numeration=lahella,jota,N0
+		'near,which,N0'
+		N0#jota lahella
+		'which near'
+
+	# Relativized PP adjunct with internal Ā-chain
+	
+		Numeration=mies,C(rel),T,D0,koira,haukkui,lahella,jota,N0
+		'man.dog,C,T,D0,dog.nom,bark.pst.3sg,near,which,N0'
+		koira N0#jota lahella mies#D0 haukkui#T
+		mies N0#jota lahella koira#D0 haukkui#T
+	

@@ -54,8 +54,8 @@ vihainen :: 	A α:N LANG:FI
 D ::			D
 D0 ::			D PC:#X +wCOMP:N
 C :: 			C Fin
-C(wh) :: 		C Fin C(wh) PC:#X +wCOMP:T OP WH SCOPE
-C(rel) :: 		C Fin C(rel) REL SCOPE OP α:N λ:R PHON:0
+C(wh) :: 		C Fin C(wh) PC:#X +wCOMP:T EF WH SCOPE
+C(rel) :: 		C Fin C(rel) REL SCOPE EF α:N λ:R PHON:0
 v :: 			v κ PC:#X +wCOMP:V
 T ::			T Fin
 N0 :: 			N N0 π COMP:--,ø -LRR
@@ -70,8 +70,8 @@ N::				N
 D			=> 		COMP:N
 Dem			=> 		COMP:N
 Adv			=>		SPEC:Adv,ø λ:R α:V
-P			=> 		COMP:D λ:R κ
-C			=> 		COMP:T SPEC:D,ø
+P			=> 		COMP:D λ:R α:V κ
+C			=> 		COMP:T SPEC:P,D,ø
 A			=> 		λ:L α:N
 N			=> 		π COMP:C,P,ø,C(rel) SPEC:A,ø
 v			=>		V κ COMP:V SPEC:D wCOMP:V -ε
@@ -79,9 +79,10 @@ V/INTR		=> 		SPEC:D
 V/TR		=>		COMP:D
 Fin			=>		κ
 
-T LANG:EN	=> 		COMP:V SPEC:D EPP PC:#X +wCOMP:V
+T LANG:EN		=> 		COMP:V SPEC:D EPP PC:#X +wCOMP:V
 T LANG:FI		=>  	COMP:V SPEC:D EPP PC:#X +wCOMP:V
 PAR LANG:FI		=>		κ:v,P
 NOM LANG:FI		=>		κ:Fin,ø
 REL LANG:FI		=>		-INSITU
+P LANG:FI 		=> 		EF
 
