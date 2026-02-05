@@ -54,8 +54,8 @@ vihainen :: 	A α:N LANG:FI
 D ::			D
 D0 ::			D PC:#X +wCOMP:N
 C :: 			C Fin
-C(wh) :: 		C Fin C(wh) PC:#X +wCOMP:T EF WH SCOPE
-C(rel) :: 		C Fin C(rel) REL SCOPE EF α:N λ:R PHON:0
+C(wh) :: 		C Fin C(wh) PC:#X +wCOMP:T EF WH λ
+C(rel) :: 		C Fin C(rel) REL λ EF α:N λ:R PHON:0
 v :: 			v κ PC:#X +wCOMP:V
 T ::			T Fin
 N0 :: 			N N0 π COMP:--,ø -LRR
