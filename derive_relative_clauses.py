@@ -12,20 +12,20 @@ major_lexical_categories = ['C', 'N', 'v', 'V', 'T/inf', 'A', 'D', 'Dem', 'Adv',
 
 class SpeakerLexicon:
     """
-    Stores the lexical knowledge for a group of people, i.e. a language, dialect, register
-    ld = language data object, contains the datatset, root lexicon and other linguistic data used in the experiment
+    Stores lexical knowledge for a group of people, i.e. a language, dialect, register
+    ld = language data object, contains the dataset, root lexicon and other linguistic data used in the experiment
     L = language, must be the same format as in the lexicon e.g. LANG:FI
     """
     def __init__(self, L, ld):
         self.speaker_lexicon = dict()           # Speaker lexicon, as dictionary
-        self.create_speaker_lexicon(L, ld)      # Create the speaker lexicon by using root lexicon, language, lexical redudancy rules
-        self.apply_redundancy_rules(ld)         #
+        self.create_speaker_lexicon(L, ld)      # Create the speaker lexicon by using root lexicon, language, lexical redundancy rules
+        self.apply_redundancy_rules(ld)
 
     def create_speaker_lexicon(self, L, ld):
         """
-        Creates a speaker lexicon by selecting lexical items from language L
+        Creates speaker lexicon by selecting lexical items from language L
         Item is included if and only if its language specification does not differ from L
-        (items with no language specification are included)
+        (thus, items with no language specification are included)
         """
         for lex in ld.root_lexicon.keys():
             if not {f for f in ld.root_lexicon[lex] if f.startswith('LANG:') and f != L}:
@@ -105,6 +105,7 @@ class PhraseStructure:
         X.features = X.features | fset
 
     def get_features(X):
+        """Feature manipulation"""
         return X.features
 
     def Merge(X, Y):
@@ -732,24 +733,42 @@ class LanguageData:
 
     # Read the dataset
     def read_dataset(self, filename):
-        numeration = []
+        numeration = []     # Stores the set of initial words (as list)
         dataset = set()
+        target_numeration = False   # Auxiliary variable detecting user selected (%-marked) numeration
         with open(filename) as f:
             lines = f.readlines()
             for line in lines:
                 line = line.strip()
+
+                # Ignore empty lines and comments
                 if line.strip() and not line.startswith('#') and not line.startswith("\'") and not line.startswith('END'):
                     line = line.strip()
+
+                    # Symbol ^ will cause the function to pick up only the preceding item (numeration + dataset)
+                    # Note: the final item is appended at the end of this function
+                    if line.startswith('^') and not line.startswith('^^'):
+                        self.study_dataset = []
+                        break
+                    # Symbol @ or ^^ will cause the function to stop reading further items
+                    if line.startswith('END') or line.startswith('^^'):
+                        break
+                    # If we find new numeration, add PREVIOUS numeration + data into the dataset
+                    # Then start processing the new numeration
                     if line.startswith('Numeration='):
+
+                        # If there is a new numeration, store the previous numeration and dataset
                         if numeration:
                             self.study_dataset.append((numeration, dataset))
                             dataset = set()
+
+                        # Create new numeration
                         # Items in the numeration are separated by comma
                         numeration = [word.strip() for word in line.split('=')[1].split(',')]
+
+                    # All other lines except numerations are assumed to be data items
                     else:
                         dataset.add(line.strip())
-                if line.startswith('END'):
-                    break
             self.study_dataset.append((numeration, dataset))
 
     def print_root_lexicon(self):

@@ -5,8 +5,10 @@
 # Dataset for manuscript
 # "Finnish relative clause and the derivational search function"
 # submitted for publication
-# 2025
+# 2026
 #
+# Use ^ (separate line) if you want to add only the preceding data item
+# Use END or ^^ (separate line) if you want to add only all previous data items
 			
 # --- English ---
 
